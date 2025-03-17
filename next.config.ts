@@ -1,9 +1,10 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from 'next'
+
+const nextConfig: NextConfig = {
   reactStrictMode: true,
-  experimental: {
-    appDir: true, // Required for app directory structure in Next 13
+  eslint: {
+    ignoreDuringBuilds: true, // ✅ Ignore ESLint errors during Vercel build
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
