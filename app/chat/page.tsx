@@ -1,13 +1,15 @@
 "use client";
 import { useState } from "react";
+import { useRouter } from "next/navigation"; // Import router
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([{ user: "bot", text: "Hello! How can I help you today?" }]);
   const [input, setInput] = useState("");
+  const router = useRouter(); // Initialize router
 
   const handleSend = () => {
     if (!input.trim()) return;
-    
+
     // User message
     const newMessages = [...messages, { user: "user", text: input }];
     setMessages(newMessages);
@@ -21,6 +23,14 @@ export default function Chatbot() {
 
   return (
     <div className="min-h-screen bg-green-50 flex flex-col items-center p-6">
+      {/* Back Button */}
+      <button
+        onClick={() => router.back()} // Go back to the previous page
+        className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 mb-4"
+      >
+        ← Back
+      </button>
+
       <h2 className="text-2xl font-bold text-green-800">Chat with Doctor AI</h2>
 
       <div className="bg-white w-full max-w-lg p-4 mt-4 rounded-lg shadow-md">
@@ -40,7 +50,9 @@ export default function Chatbot() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
-          <button onClick={handleSend} className="bg-green-600 text-white p-2 rounded-r-lg">Send</button>
+          <button onClick={handleSend} className="bg-green-600 text-white p-2 rounded-r-lg">
+            Send
+          </button>
         </div>
       </div>
     </div>

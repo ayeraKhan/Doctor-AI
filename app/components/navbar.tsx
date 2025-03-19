@@ -7,8 +7,10 @@ import { motion } from "framer-motion";
 export default function Navbar() {
   const { data: session, status } = useSession();
 
+  console.log("Navbar Session Data:", session); // ✅ Debugging line
+
   return (
-    <nav className="bg-white shadow-md fixed w-full top-0 left-0 z-50">
+    <nav className="bg-green shadow-md fixed w-full top-0 left-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
@@ -19,7 +21,7 @@ export default function Navbar() {
           </Link>
 
           {/* Links */}
-          <ul className="flex space-x-6 text-gray-700 font-medium items-center">
+          <ul className="flex space-x-6 text-gray-700 font-medium items-center" key={session?.user?.email || "guest"}>
             <NavItem href="/">Home</NavItem>
             <NavItem href="/aboutus">About Us</NavItem>
 
@@ -27,6 +29,8 @@ export default function Navbar() {
               <>
                 <NavItem href="/dashboard">Dashboard</NavItem>
                 <NavItem href="/view-history">View History</NavItem>
+
+                {/* ✅ Logout Button */}
                 <button
                   onClick={() => signOut()}
                   className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
@@ -40,6 +44,16 @@ export default function Navbar() {
                 <NavItem href="/register">Register</NavItem>
               </>
             )}
+
+            {/* ✅ Moved Contact Us Button Here */}
+            <li>
+              <Link
+                href="/contact"
+                className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition"
+              >
+                Contact Us
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
