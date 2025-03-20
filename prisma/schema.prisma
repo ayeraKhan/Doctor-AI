@@ -8,12 +8,11 @@ datasource db {
 }
 
 model MedicalHistory {
-  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  id          String @id @map("_id") @db.ObjectId
   age         String
   weight      String
   height      String
-  allergies   String?
-  medications String?
-  conditions  String?
-  createdAt   DateTime @default(now())
+  allergies   String
+  medications String
+  medicalConditions String
 }
