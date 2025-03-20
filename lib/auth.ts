@@ -14,7 +14,7 @@ export const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async session({ session, token }) {
+    async session({ session }: { session: any }) {
       if (session?.user?.email) {
         const userInDb = await User.findOne({ email: session.user.email });
 
