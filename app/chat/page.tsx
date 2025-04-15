@@ -1,25 +1,34 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation"; // Import router
+import ChatComponent from "../components/ChatComponent";
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([{ user: "bot", text: "Hello! How can I help you today?" }]);
   const [input, setInput] = useState("");
   const router = useRouter(); // Initialize router
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return;
-
-    // User message
+  
     const newMessages = [...messages, { user: "user", text: input }];
     setMessages(newMessages);
     setInput("");
-
-    // Fake bot response (Replace with API call later)
-    setTimeout(() => {
-      setMessages([...newMessages, { user: "bot", text: "I'm here to support you 😊" }]);
-    }, 1000);
+  
+    try {
+      const response = await fetch("http://192.168.1.8:5000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: input }),
+      });
+      const data = await response.json();
+      setMessages([...newMessages, { user: "bot", text: data.response }]);
+    } catch (error) {
+      console.error("API error:", error);
+      setMessages([...newMessages, { user: "bot", text: "Sorry, something went wrong." }]);
+    }
   };
+  
 
   return (
     <div className="min-h-screen bg-green-50 flex flex-col items-center p-6">
@@ -54,6 +63,7 @@ export default function Chatbot() {
             Send
           </button>
         </div>
+        <ChatComponent />
       </div>
     </div>
   );

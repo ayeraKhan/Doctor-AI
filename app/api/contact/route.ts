@@ -17,7 +17,7 @@ export async function POST(req: Request) {
     await transporter.sendMail({
       from: email,
       to: "contactayera@gmail.com",
-      subject: `New Contact Form Submission from ${name}`,
+      subject: `Email from ${name}`,
       text: message,
       html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong> ${message}</p>`,
     });
